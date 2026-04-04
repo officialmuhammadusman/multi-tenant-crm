@@ -1,0 +1,132 @@
+// packages/db/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  MEMBER
+}
+
+enum ActivityAction {
+  CUSTOMER_CREATED
+  CUSTOMER_UPDATED
+  CUSTOMER_DELETED
+  CUSTOMER_RESTORED
+  NOTE_ADDED
+  CUSTOMER_ASSIGNED
+}
+
+model Organization {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  users        User[]
+  customers    Customer[]
+  notes        Note[]
+  activityLogs ActivityLog[]
+
+  @@map("organizations")
+}
+
+model User {
+  id             String   @id @default(uuid()) @db.Uuid
+  name           String   @db.VarChar(100)
+  email          String   @unique @db.VarChar(255)
+  passwordHash   String   @map("password_hash") @db.VarChar(255)
+  role           UserRole @default(MEMBER)
+  isSuperAdmin   Boolean  @default(false) @map("is_super_admin")
+  organizationId String?  @map("organization_id") @db.Uuid
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  organization      Organization?  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assignedCustomers Customer[]     @relation("AssignedUser")
+  createdNotes      Note[]         @relation("NoteCreator")
+  activityLogs      ActivityLog[]  @relation("PerformedBy")
+  refreshTokens     RefreshToken[]
+
+  @@index([organizationId])
+  @@index([email])
+  @@map("users")
+}
+
+model Customer {
+  id             String    @id @default(uuid()) @db.Uuid
+  name           String    @db.VarChar(200)
+  email          String    @db.VarChar(255)
+  phone          String?   @db.VarChar(30)
+  organizationId String    @map("organization_id") @db.Uuid
+  assignedTo     String?   @map("assigned_to") @db.Uuid
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  deletedAt      DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assignedUser User?        @relation("AssignedUser", fields: [assignedTo], references: [id], onDelete: SetNull)
+  notes        Note[]
+
+  @@index([organizationId])
+  @@index([assignedTo])
+  @@index([deletedAt])
+  @@map("customers")
+}
+
+model Note {
+  id             String   @id @default(uuid()) @db.Uuid
+  content        String   @db.VarChar(2000)
+  customerId     String   @map("customer_id") @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  createdBy      String   @map("created_by") @db.Uuid
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  customer     Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  creator      User         @relation("NoteCreator", fields: [createdBy], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+  @@index([organizationId])
+  @@map("notes")
+}
+
+model ActivityLog {
+  id             String         @id @default(uuid()) @db.Uuid
+  entityType     String         @map("entity_type") @db.VarChar(50)
+  entityId       String         @map("entity_id") @db.Uuid
+  action         ActivityAction
+  performedBy    String         @map("performed_by") @db.Uuid
+  organizationId String         @map("organization_id") @db.Uuid
+  timestamp      DateTime       @default(now())
+
+  performer    User         @relation("PerformedBy", fields: [performedBy], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([entityId, entityType])
+  @@index([organizationId, timestamp(sort: Desc)])
+  @@index([performedBy])
+  @@map("activity_logs")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  token     String   @unique @db.VarChar(255)
+  userId    String   @map("user_id") @db.Uuid
+  expiresAt DateTime @map("expires_at")
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}
