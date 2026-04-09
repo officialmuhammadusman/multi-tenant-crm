@@ -12,13 +12,16 @@
                             "rootDir":  "./src",
                             "outDir":  "./dist",
                             "declaration":  true,
-                            "sourceMap":  true
+                            "sourceMap":  true,
+                            "forceConsistentCasingInFileNames": true,
+                            "moduleResolution": "bundler"
                         },
     "include":  [
                     "src/**/*"
                 ],
     "exclude":  [
                     "node_modules",
-                    "dist"
+                    "dist",
+                    "prisma"
                 ]
 }
