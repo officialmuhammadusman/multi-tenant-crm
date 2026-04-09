@@ -1,13 +1,17 @@
-// apps/api/src/main.ts
 import { NestFactory } from '@nestjs/core';
 import { VersioningType, Logger } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
+import { validateEnv } from './common/env.validation';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
+
+  // ✅ Validate environment variables FIRST (at runtime, not build time)
+  validateEnv(process.env);
+
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'log', 'debug'],
   });

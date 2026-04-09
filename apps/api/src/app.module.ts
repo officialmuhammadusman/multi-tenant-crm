@@ -1,4 +1,3 @@
-// apps/api/src/app.module.ts
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
@@ -16,13 +15,13 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { CorrelationIdInterceptor } from './common/interceptors/correlation-id.interceptor';
-import { validateEnv } from './common/env.validation';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validate: validateEnv,
+      // ✅ Removed validate: validateEnv from here
+      // Validation now happens in main.ts at runtime
     }),
     ThrottlerModule.forRoot([
       {
