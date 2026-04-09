@@ -56,6 +56,18 @@ importers:
       '@nestjs/throttler':
         specifier: ^6.3.0
         version: 6.5.0(@nestjs/common@11.1.18(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.18)(reflect-metadata@0.2.2)
+      '@types/bcryptjs':
+        specifier: ^2.4.6
+        version: 2.4.6
+      '@types/cookie-parser':
+        specifier: ^1.4.7
+        version: 1.4.10(@types/express@5.0.6)
+      '@types/express':
+        specifier: ^5.0.0
+        version: 5.0.6
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.19.17
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
@@ -80,6 +92,9 @@ importers:
       rxjs:
         specifier: ^7.8.1
         version: 7.8.2
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
       uuid:
         specifier: ^11.0.3
         version: 11.1.0
@@ -90,21 +105,9 @@ importers:
       '@nestjs/testing':
         specifier: ^11.0.0
         version: 11.1.18(@nestjs/common@11.1.18(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.18)(@nestjs/platform-express@11.1.18)
-      '@types/bcryptjs':
-        specifier: ^2.4.6
-        version: 2.4.6
-      '@types/cookie-parser':
-        specifier: ^1.4.7
-        version: 1.4.10(@types/express@5.0.6)
-      '@types/express':
-        specifier: ^5.0.0
-        version: 5.0.6
       '@types/jest':
         specifier: ^29.5.14
         version: 29.5.14
-      '@types/node':
-        specifier: ^22.10.5
-        version: 22.19.17
       '@types/passport-jwt':
         specifier: ^4.0.1
         version: 4.0.1
@@ -126,9 +129,6 @@ importers:
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.19.17)(typescript@5.9.3)
-      typescript:
-        specifier: ^5.7.3
-        version: 5.9.3
 
   apps/web:
     dependencies:
