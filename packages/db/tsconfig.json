@@ -14,7 +14,8 @@
                             "declaration":  true,
                             "sourceMap":  true,
                             "forceConsistentCasingInFileNames": true,
-                            "moduleResolution": "bundler"
+                            "moduleResolution": "node",
+                            "ignoreDeprecations": "6.0"
                         },
     "include":  [
                     "src/**/*"
