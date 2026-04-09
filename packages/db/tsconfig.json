@@ -1,28 +1,23 @@
 {
-    "compilerOptions":  {
-                            "target":  "ES2022",
-                            "module":  "commonjs",
-                            "lib":  [
-                                        "ES2022"
-                                    ],
-                            "strict":  true,
-                            "esModuleInterop":  true,
-                            "skipLibCheck":  true,
-                            "resolveJsonModule":  true,
-                            "rootDir":  "./src",
-                            "outDir":  "./dist",
-                            "declaration":  true,
-                            "sourceMap":  true,
-                            "forceConsistentCasingInFileNames": true,
-                            "moduleResolution": "node",
-                            "ignoreDeprecations": "6.0"
-                        },
-    "include":  [
-                    "src/**/*"
-                ],
-    "exclude":  [
-                    "node_modules",
-                    "dist",
-                    "prisma"
-                ]
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "lib": ["ES2022"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declaration": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    /* This silences the deprecation warnings you saw earlier */
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "prisma"]
 }
