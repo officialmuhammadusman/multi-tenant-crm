@@ -7,7 +7,7 @@ import { LoginSchema } from '@crm/types';
 import { useAuth } from '@/hooks';
 import { Button }    from '@/components/ui/button';
 import { Input }     from '@/components/ui/input';
-import { FormField } from '@/components/ui/form-field';
+import { FormField } from '../ui/form-field';
 
 type LoginFormValues = z.infer<typeof LoginSchema>;
 

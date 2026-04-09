@@ -1,0 +1,6 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "cd ../.. && npx pnpm@latest install && npx pnpm@latest db:generate && npx pnpm@latest --filter @crm/web build",
+  "installCommand": "npx pnpm@latest install",
+  "outputDirectory": ".next"
+}

@@ -1,8 +1,13 @@
-// src/components/ui/skeleton.tsx
-import { cn } from '@/lib/utils';
-export function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('animate-pulse rounded-md bg-muted', className)} {...props} />;
+import { cn } from "@/lib/utils"
+
+function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="skeleton"
+      className={cn("animate-pulse rounded-md bg-muted", className)}
+      {...props}
+    />
+  )
 }
 
-// src/components/ui/separator.tsx
-export { Separator } from './separator-impl';
+export { Skeleton }

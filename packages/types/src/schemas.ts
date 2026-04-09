@@ -1,6 +1,5 @@
 // packages/types/src/schemas.ts
 import { z } from 'zod';
-import { ACTIVITY_LABELS } from './activity-labels';
 
 // ─── Enums ───────────────────────────────────────────────────────────────────
 

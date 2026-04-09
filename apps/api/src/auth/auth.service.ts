@@ -69,14 +69,7 @@ export class AuthService {
       },
     };
 
-    return {
-      ...ApiResponse.success(tokenResponse, 'Login successful'),
-      meta: {
-        timestamp: new Date().toISOString(),
-        correlationId,
-        _refreshToken: refreshToken,
-      } as unknown as typeof tokenResponse,
-    } as ApiResponseShape<TokenResponse> & { _refreshToken: string };
+    return ApiResponse.success(tokenResponse, 'Login successful', 200, { correlationId });
   }
 
   async loginAndGetRefreshToken(
@@ -215,3 +208,4 @@ export class AuthService {
     return ApiResponse.success(null, 'Logged out successfully', 200, { correlationId });
   }
 }
+

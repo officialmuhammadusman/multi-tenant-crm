@@ -11,7 +11,7 @@ import { Response } from 'express';
 import { ZodError } from 'zod';
 import { ApiResponse, FieldError } from '@crm/types';
 import { getRequestContext } from '../context/request-context';
-import { Prisma } from '@crm/db';
+import { PrismaClientKnownRequestError } from '@crm/db/dist/generated/prisma/runtime/library';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -35,7 +35,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     }
 
     // ── Prisma errors ─────────────────────────────────────────────────────
-    if (exception instanceof Prisma.PrismaClientKnownRequestError) {
+    if (exception instanceof PrismaClientKnownRequestError) {
       if (exception.code === 'P2002') {
         response.status(409).json(ApiResponse.error('A record with this value already exists', 409, null, correlationId));
         return;

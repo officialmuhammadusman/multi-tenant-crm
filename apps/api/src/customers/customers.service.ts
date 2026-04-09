@@ -14,7 +14,7 @@ import {
   AssignCustomerDto,
   JwtPayload,
   PaginationQuery,
-  getActivityLabel,
+ 
 } from '@crm/types';
 
 const CUSTOMER_SELECT = {
@@ -44,7 +44,7 @@ export class CustomersService {
   async create(
     dto: CreateCustomerDto,
     caller: JwtPayload,
-    correlationId: string,
+    _correlationId: string,
   ): Promise<ApiResponseShape<unknown>> {
     const organizationId = caller.organizationId;
     if (!organizationId) throw new ForbiddenException('No organization context');

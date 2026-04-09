@@ -10,7 +10,7 @@ import { userService } from '@/lib/api/services';
 import { useAsync } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { FormField } from '@/components/ui/form-field';
+import { FormField } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DialogFooter } from '@/components/ui/dialog';
 import { Controller } from 'react-hook-form';

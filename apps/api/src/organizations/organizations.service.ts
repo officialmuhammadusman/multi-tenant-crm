@@ -19,7 +19,7 @@ export class OrganizationsService {
       orderBy: { createdAt: 'desc' },
     });
 
-    const data = orgs.map((o) => ({
+    const data = orgs.map((o: any) => ({
       id: o.id,
       name: o.name,
       createdAt: o.createdAt,
@@ -27,7 +27,7 @@ export class OrganizationsService {
       customerCount: o._count.customers,
     }));
 
-    return ApiResponse.success(data, 'Organizations retrieved', 200, { correlationId });
+    return ApiResponse.success(data, 'Organizations retrieved', 200, { correlationId: correlationId });
   }
 
   async findOne(id: string, correlationId: string): Promise<ApiResponseShape<unknown>> {
@@ -53,13 +53,13 @@ export class OrganizationsService {
       },
       'Organization retrieved',
       200,
-      { correlationId },
+      { correlationId: correlationId },
     );
   }
 
   async create(
     dto: CreateOrganizationDto,
-    correlationId: string,
+    _correlationId: string,
   ): Promise<ApiResponseShape<unknown>> {
     const org = await this.prisma.organization.create({ data: { name: dto.name } });
     return ApiResponse.created(org, 'Organization created');

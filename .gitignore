@@ -1,3 +1,4 @@
+# Existing
 node_modules
 dist
 .turbo
@@ -6,3 +7,34 @@ dist
 *.log
 coverage
 src/generated
+
+# ✅ Next.js
+.next
+out
+
+# ✅ Build / cache
+.cache
+.tmp
+
+# ✅ OS files
+.DS_Store
+Thumbs.db
+
+# ✅ IDE
+.vscode
+.idea
+
+# ✅ Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ✅ Env variants
+.env.*
+!.env.example
+
+# ✅ Prisma (optional if generated)
+prisma/generated
+
+# ✅ Misc
+*.tsbuildinfo

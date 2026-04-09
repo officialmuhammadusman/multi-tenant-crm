@@ -1,5 +1,5 @@
-// src/components/layout/Providers.tsx
 'use client';
+// src/components/layout/Providers.tsx
 import { Provider } from 'react-redux';
 import { Toaster } from 'sonner';
 import { store } from '@/store';
@@ -12,9 +12,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <ErrorBoundary>
         <AuthProvider>
           {children}
-          <Toaster position="top-right" richColors closeButton expand={false} />
         </AuthProvider>
       </ErrorBoundary>
+      {/* Toaster outside AuthProvider — avoids React.Children.only issues */}
+      <Toaster position="top-right" richColors closeButton expand={false} />
     </Provider>
   );
 }

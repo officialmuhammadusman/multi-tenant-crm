@@ -10,7 +10,7 @@ import { noteService } from '@/lib/api/services';
 import { useAsync } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { FormField } from '@/components/ui/form-field';
+import { FormField } from '@/components/ui/form';
 
 type NoteFormValues = z.infer<typeof CreateNoteSchema>;
 

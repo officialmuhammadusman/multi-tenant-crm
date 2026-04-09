@@ -1,5 +1,4 @@
 'use client';
-// src/app/error.tsx
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
@@ -26,8 +25,18 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
           )}
         </div>
         <div className="flex gap-3 justify-center">
-          <Button onClick={reset} className="gap-2"><RefreshCw className="w-4 h-4" />Try again</Button>
-          <Button variant="outline" asChild><Link href={ROUTES.customers.list} className="gap-2"><Home className="w-4 h-4" />Go home</Link></Button>
+          <Button onClick={reset} className="gap-2">
+            <RefreshCw className="w-4 h-4" />
+            Try again
+          </Button>
+          {/* No asChild — use plain anchor inside a styled div */}
+          <Link
+            href={ROUTES.customers.list}
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 transition-colors"
+          >
+            <Home className="w-4 h-4" />
+            Go home
+          </Link>
         </div>
       </div>
     </div>

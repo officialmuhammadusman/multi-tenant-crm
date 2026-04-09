@@ -10,7 +10,7 @@ import { organizationService } from '@/lib/api/services';
 import { useAsync } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { FormField } from '@/components/ui/form-field';
+import { FormField } from '@/components/ui/form';
 import { DialogFooter } from '@/components/ui/dialog';
 
 type CreateOrgValues = z.infer<typeof CreateOrganizationSchema>;

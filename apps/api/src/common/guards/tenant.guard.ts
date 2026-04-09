@@ -21,7 +21,7 @@ export class TenantGuard implements CanActivate {
     // Super admins bypass tenant isolation entirely
     if (user.isSuperAdmin) return true;
 
-    const customerId = request.params['id'] ?? request.params['customerId'];
+    const customerId = Array.isArray(request.params['id']) ? request.params['id'][0] : (request.params['id'] ?? (Array.isArray(request.params['customerId']) ? request.params['customerId'][0] : request.params['customerId']));
     if (!customerId) return true;
 
     const customer = await this.prisma.customer.findUnique({

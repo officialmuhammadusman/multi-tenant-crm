@@ -1,5 +1,5 @@
 // apps/api/src/notes/notes.service.ts
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@crm/db';
 import { ApiResponse, ApiResponseShape, CreateNoteDto, JwtPayload } from '@crm/types';
 
@@ -10,7 +10,7 @@ export class NotesService {
   async create(
     dto: CreateNoteDto,
     caller: JwtPayload,
-    correlationId: string,
+    _correlationId: string,
   ): Promise<ApiResponseShape<unknown>> {
     const orgId = caller.organizationId;
 
@@ -63,7 +63,7 @@ export class NotesService {
   async findByCustomer(
     customerId: string,
     caller: JwtPayload,
-    correlationId: string,
+    _correlationId: string,
   ): Promise<ApiResponseShape<unknown>> {
     // Verify customer exists; if soft-deleted, return empty array
     const customer = await this.prisma.customer.findFirst({
@@ -77,7 +77,7 @@ export class NotesService {
 
     // If customer is soft-deleted, notes are hidden
     if (customer.deletedAt !== null) {
-      return ApiResponse.success([], 'Notes retrieved', 200, { correlationId });
+      return ApiResponse.success([], 'Notes retrieved', 200, { correlationId: _correlationId });
     }
 
     const notes = await this.prisma.note.findMany({
@@ -97,6 +97,6 @@ export class NotesService {
       orderBy: { createdAt: 'desc' },
     });
 
-    return ApiResponse.success(notes, 'Notes retrieved', 200, { correlationId });
+    return ApiResponse.success(notes, 'Notes retrieved', 200, { correlationId: _correlationId });
   }
 }

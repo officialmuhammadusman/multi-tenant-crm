@@ -21,7 +21,7 @@ export class UsersService {
   async create(
     dto: CreateUserDto,
     caller: JwtPayload,
-    correlationId: string,
+    _correlationId: string,
   ): Promise<ApiResponseShape<unknown>> {
     // Admins can only create users in their own org
     const organizationId = caller.organizationId;
@@ -57,7 +57,7 @@ export class UsersService {
 
   async findAllInOrg(
     organizationId: string,
-    correlationId: string,
+    _correlationId: string,
   ): Promise<ApiResponseShape<unknown>> {
     const users = await this.prisma.user.findMany({
       where: { organizationId },
@@ -72,7 +72,7 @@ export class UsersService {
       orderBy: { createdAt: 'asc' },
     });
 
-    return ApiResponse.success(users, 'Users retrieved', 200, { correlationId });
+    return ApiResponse.success(users, 'Users retrieved', 200, { correlationId: _correlationId });
   }
 
   async findMe(userId: string, correlationId: string): Promise<ApiResponseShape<unknown>> {
@@ -90,6 +90,6 @@ export class UsersService {
     });
 
     if (!user) throw new NotFoundException('User not found');
-    return ApiResponse.success(user, 'Profile retrieved', 200, { correlationId });
+    return ApiResponse.success(user, 'Profile retrieved', 200, { correlationId: correlationId });
   }
 }

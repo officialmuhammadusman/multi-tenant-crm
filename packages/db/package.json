@@ -2,8 +2,8 @@
   "name": "@crm/db",
   "version": "1.0.0",
   "private": true,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
  "scripts": {
   "generate":      "prisma generate",
   "migrate:dev": "prisma db push",
@@ -11,7 +11,7 @@
   "migrate:deploy":"prisma migrate deploy",
   "studio":        "prisma studio",
   "seed":          "tsx prisma/seed.ts",
-  "build":         "tsc --noEmit"
+  "build": "tsc"
 },
   "dependencies": {
     "@prisma/client": "^6.2.1",

@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { PrismaService } from '@crm/db';
+import Redis from 'ioredis';
 
 @Module({
   imports: [
@@ -12,12 +13,21 @@ import { PrismaService } from '@crm/db';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: config.get<string>('JWT_EXPIRES_IN', '15m') },
+        signOptions: { expiresIn: config.get<string>('JWT_EXPIRES_IN', '15m') as any },
       }),
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, PrismaService],
+  providers: [
+    AuthService,
+    PrismaService,
+    {
+      provide: 'REDIS_CLIENT',
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) =>
+        new Redis(config.get<string>('REDIS_URL', 'redis://localhost:6379')),
+    },
+  ],
   exports: [JwtModule],
 })
 export class AuthModule {}

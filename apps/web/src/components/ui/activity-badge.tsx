@@ -1,14 +1,15 @@
-// src/components/ui/activity-badge.tsx
-import { cn } from '@/lib/utils';
-import { theme } from '@/lib/theme';
+import { Badge } from '@/components/ui/badge';
+
+const activityConfig: Record<string, { label: string; variant: 'default' | 'secondary' | 'outline' | 'destructive' }> = {
+  CREATED:  { label: 'Created',  variant: 'default'     },
+  UPDATED:  { label: 'Updated',  variant: 'secondary'   },
+  DELETED:  { label: 'Deleted',  variant: 'destructive' },
+  ASSIGNED: { label: 'Assigned', variant: 'outline'     },
+};
 
 interface ActivityBadgeProps { action: string; className?: string }
 
-export function ActivityBadge({ action, className }: ActivityBadgeProps) {
-  const config = theme.activityBadges[action] ?? { className: 'bg-gray-100 text-gray-700', label: action };
-  return (
-    <span className={cn('inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold', config.className, className)}>
-      {config.label}
-    </span>
-  );
+export function ActivityBadge({ action }: ActivityBadgeProps) {
+  const config = activityConfig[action] ?? { label: action, variant: 'outline' as const };
+  return <Badge variant={config.variant}>{config.label}</Badge>;
 }

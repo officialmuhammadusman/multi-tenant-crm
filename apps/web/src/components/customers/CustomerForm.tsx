@@ -11,7 +11,7 @@ import { extractApiError } from '@/lib/utils';
 import { useCurrentUser, useAsync } from '@/hooks';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { FormField } from '@/components/ui/form-field';
+import { FormField } from '../ui/form-field';
 import { DialogFooter } from '@/components/ui/dialog';
 
 type CreateValues = z.infer<typeof CreateCustomerSchema>;

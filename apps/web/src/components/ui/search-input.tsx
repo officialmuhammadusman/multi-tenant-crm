@@ -1,10 +1,8 @@
-// src/components/ui/search-input.tsx
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
-import { Input } from './input';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { useDebounce } from '@/hooks';
 
 interface SearchInputProps {
   onSearch: (value: string) => void;
@@ -15,23 +13,22 @@ interface SearchInputProps {
 
 export function SearchInput({ onSearch, placeholder = 'Search...', className, isLoading }: SearchInputProps) {
   const [value, setValue] = useState('');
-  const debounced = useDebounce(value, 300);
 
-  // Fire search when debounced value changes
-  useState(() => { onSearch(debounced); });
-  // Use effect properly
-  import('react').then(({ useEffect }) => {});
+  useEffect(() => {
+    const timer = setTimeout(() => onSearch(value), 300);
+    return () => clearTimeout(timer);
+  }, [value, onSearch]);
 
   return (
     <div className={cn('relative', className)}>
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
       <Input
         value={value}
-        onChange={(e) => { setValue(e.target.value); onSearch(e.target.value); }}
+        onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
         className="pl-9 pr-9"
       />
-      {value && (
+      {value && !isLoading && (
         <button
           onClick={() => { setValue(''); onSearch(''); }}
           className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
