@@ -6,4 +6,12 @@ export class PrismaService extends PrismaClient {
       log: ['error', 'warn'],
     });
   }
+
+  async onModuleInit() {
+    await this.$connect();
+  }
+
+  async onModuleDestroy() {
+    await this.$disconnect();
+  }
 }
