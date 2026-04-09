@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import Redis from 'ioredis';
+import { PrismaService } from '@crm/db';
 
 import { AuthModule } from './auth/auth.module';
 import { OrganizationsModule } from './organizations/organizations.module';
@@ -20,8 +21,6 @@ import { CorrelationIdInterceptor } from './common/interceptors/correlation-id.i
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      // ✅ Removed validate: validateEnv from here
-      // Validation now happens in main.ts at runtime
     }),
     ThrottlerModule.forRoot([
       {
@@ -38,6 +37,7 @@ import { CorrelationIdInterceptor } from './common/interceptors/correlation-id.i
     ActivityModule,
   ],
   providers: [
+    PrismaService,  // ← ADD THIS
     // Redis client as a global provider
     {
       provide: 'REDIS_CLIENT',
